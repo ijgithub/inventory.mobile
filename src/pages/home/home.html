@@ -1,14 +1,25 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Manage ...</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="openPage('manageItemTemplates')">
+        Item Templates
+      </button>
+      <button ion-item (click)="openPage('manageRecipes')">
+        Recipes
+      </button>
+      <button ion-item (click)="openPage('manageInventory')">
+        Inventory
+      </button>
+      <button ion-item (click)="closeMenu()">
+        Close
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-</ion-content>
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
