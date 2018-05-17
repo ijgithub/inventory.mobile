@@ -9,12 +9,75 @@
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
     </button>
+      <ion-title>Inventory items</ion-title>
+      <ion-buttons end class="bar-buttons bar-buttons-md">
+        <button icon-only="" ion-button="" class="bar-button bar-button-md bar-button-default bar-button-default-md" (click)="_handleNewItemButtonClick($event)">
+          <span class="button-inner">
+            <ion-icon name="add" role="img" class="icon icon-md ion-md-add" aria-label="add" ng-reflect-name="add"></ion-icon>
+          </span>
+          <div class="button-effect" style="transform: translate3d(-25px, -13px, 0px) scale(1); height: 64px; width: 64px; opacity: 0; transition: transform 260ms, opacity 182ms 78ms;"></div>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
 
-    <ion-title>manage-inventory</ion-title>
-  </ion-navbar>
-</ion-header>
+  <ion-content>
+    <ion-segment [(ngModel)]="itemCategory">
+      <ion-segment-button value="weapons">Weapons</ion-segment-button>
+      <ion-segment-button value="armor">Armor</ion-segment-button>
+      <ion-segment-button value="craftingIngredients">Crating ingredients</ion-segment-button>
+      <ion-segment-button value="alchemyIngredients">Alchemy ingredients</ion-segment-button>
+    </ion-segment>
 
+    <div [ngSwitch]="itemCategory">
+      <ion-card *ngSwitchCase="'weapons'">
+        <p *ngIf="!items.length">No weapon items available</p>
+        <ion-list *ngIf="items.length">
+          <ng-template ngFor let-item [ngForOf]="items" let-i="index">
+            <div ion-item>
+              <label for="">{{item.id}}</label>
+              <span>{{item.title}}</span>
+            </div>
+          </ng-template>
+        </ion-list>
+      </ion-card>
 
-<ion-content padding>
-  This is sparta!!!
-</ion-content>
+      <ion-card *ngSwitchCase="'armor'">
+        <p *ngIf="!items.length">No armor items available</p>
+        <ion-list *ngIf="items.length">
+          <ng-template ngFor let-item [ngForOf]="items" let-i="index">
+            <div ion-item>
+              <label for="">{{item.id}}</label>
+              <span>{{item.title}}</span>
+            </div>
+          </ng-template>
+        </ion-list>
+      </ion-card>
+
+      <ion-card *ngSwitchCase="'craftingIngredients'">
+        <p *ngIf="!items.length">No crating ingredients available</p>
+        <ion-list *ngIf="items.length">
+          <ng-template ngFor let-item [ngForOf]="items" let-i="index">
+            <div ion-item>
+              <label for="">{{item.id}}</label>
+              <span>{{item.title}}</span>
+            </div>
+          </ng-template>
+        </ion-list>
+      </ion-card>
+
+      <ion-card *ngSwitchCase="'alchemyIngredients'">
+        <p *ngIf="!items.length">No alchemy ingredients available</p>
+        <ion-list *ngIf="items.length">
+          <ng-template ngFor let-item [ngForOf]="items" let-i="index">
+            <div ion-item>
+              <label for="">{{item.id}}</label>
+              <span>{{item.title}}</span>
+            </div>
+          </ng-template>
+        </ion-list>
+      </ion-card>
+
+    </div>
+
+  </ion-content>

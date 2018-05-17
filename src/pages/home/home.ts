@@ -11,7 +11,8 @@ import { ManageInventoryPage } from '../manage-inventory/manage-inventory';
 })
 export class HomePage {
   @ViewChild(Nav) nav: Nav;
-  rootPage = ManageInventoryPage;
+  // rootPage = ManageInventoryPage;
+  rootPage = ManageItemTemplatesPage;
 
   constructor(
     public navCtrl: NavController,

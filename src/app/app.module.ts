@@ -9,6 +9,10 @@ import { HomePage } from '../pages/home/home';
 import { ManageRecipesPage } from '../pages/manage-recipes/manage-recipes';
 import { ManageItemTemplatesPage } from '../pages/manage-item-templates/manage-item-templates';
 import { ManageInventoryPage } from '../pages/manage-inventory/manage-inventory';
+import { InventoryProvider } from '../providers/inventory/inventory';
+import { HttpClientModule } from '@angular/common/http';
+import { ItemTemplatesProvider } from '../providers/item-templates/item-templates';
+import { CreateItemTemplatePage } from '../pages/create-item-template/create-item-template';
 
 @NgModule({
   declarations: [
@@ -16,11 +20,13 @@ import { ManageInventoryPage } from '../pages/manage-inventory/manage-inventory'
     HomePage,
     ManageInventoryPage,
     ManageItemTemplatesPage,
-    ManageRecipesPage
+    ManageRecipesPage,
+    CreateItemTemplatePage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -28,12 +34,15 @@ import { ManageInventoryPage } from '../pages/manage-inventory/manage-inventory'
     HomePage,
     ManageInventoryPage,
     ManageItemTemplatesPage,
-    ManageRecipesPage
+    ManageRecipesPage,
+    CreateItemTemplatePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    InventoryProvider,
+    ItemTemplatesProvider
   ]
 })
 export class AppModule {}

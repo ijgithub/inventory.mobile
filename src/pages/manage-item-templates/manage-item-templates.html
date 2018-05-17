@@ -12,11 +12,22 @@
     </button>
 
     <ion-title>manage-item-templates</ion-title>
+
+    <ion-buttons end class="bar-buttons bar-buttons-md">
+      <button icon-only="" ion-button="" class="bar-button bar-button-md bar-button-default bar-button-default-md" (click)="_handleNewItemButtonClick($event)">
+        <span class="button-inner">
+          <ion-icon name="add" role="img" class="icon icon-md ion-md-add" aria-label="add" ng-reflect-name="add"></ion-icon>
+        </span>
+        <div class="button-effect" style="transform: translate3d(-25px, -13px, 0px) scale(1); height: 64px; width: 64px; opacity: 0; transition: transform 260ms, opacity 182ms 78ms;"></div>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
-  this is manage item templates
+  <div *ngIf="items.length === 0">No entries present</div>
+  <ion-list *ngIf="items.length > 0">
+    <div ion-item *ngFor="let item of items"></div>
+  </ion-list>
 </ion-content>
