@@ -11,8 +11,69 @@
   </ion-navbar>
 
 </ion-header>
-
-
 <ion-content padding>
-create item template
+  <ion-item>
+    <ion-label>Select template type</ion-label>
+    <ion-select [(ngModel)]="templateType">
+      <ion-option *ngFor="let item of templateTypes" value="{{item.value}}">{{item.title}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <div [ngSwitch]="templateType">
+    <ion-card *ngSwitchCase="'weapon'">
+      <ion-title>Weapon</ion-title>
+
+      <ion-item>
+        <ion-label>Weapon Type</ion-label>
+        <ion-select [(ngModel)]="weaponModel.weaponType">
+          <ion-option *ngFor="let item of weaponTypes" value="{{item.value}}">{{item.title}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="weaponModel.name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Title</ion-label>
+        <ion-input type="text" [(ngModel)]="weaponModel.title"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Material Type</ion-label>
+        <ion-select [(ngModel)]="weaponModel.materialType">
+          <ion-option *ngFor="let item of materialTypes" value="{{item.value}}">{{item.title}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Damage</ion-label>
+        <ion-input type="number" [(ngModel)]="weaponModel.damage"></ion-input>
+      </ion-item>
+
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'armor'">
+      <ion-title>Armor</ion-title>
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'craftingIngredient'">
+      <ion-title>Crafting Ingredient</ion-title>
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'alchemyIngredient'">
+      <ion-title>Alchemy Ingredient</ion-title>
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'consumable'">
+      <ion-title>Consumable</ion-title>
+    </ion-card>
+
+  </div>
+
+  <ion-buttons>
+    <button ion-button (click)="_handleSave($event)">Save</button>
+  </ion-buttons>
+
 </ion-content>

@@ -31,7 +31,7 @@ export class ManageItemTemplatesPage {
       then(weapons => {
         this.items = weapons;
       }).catch(error => {
-        alert(error);
+        alert(error.message || error);
       })
   }
 
