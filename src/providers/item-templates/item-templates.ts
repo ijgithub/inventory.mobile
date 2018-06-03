@@ -22,4 +22,18 @@ export class ItemTemplatesProvider {
     return this.http.get(url).toPromise();
   }
 
+  weaponDetails(id: string | number): any {
+    const urlParts = [ AppSettings.apiBaseUrl, "templates", "weapons", id ];
+    const url = urlParts.join("/");
+
+    return this.http.get(url).toPromise();
+  }
+
+  createWeapon(weaponTempalte: any): Promise<any> {
+    const urlParts = [ AppSettings.apiBaseUrl, "templates", "weapons" ];
+    const url = urlParts.join("/");
+
+    return this.http.post(url, weaponTempalte).toPromise();
+  }
+
 }

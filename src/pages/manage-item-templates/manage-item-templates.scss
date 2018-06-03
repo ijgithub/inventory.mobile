@@ -1,3 +1,20 @@
 page-manage-item-templates {
+  & .layout-horizontal {
+    display: flex;
+    flex-direction: row;
+  }
 
+  & .weapon-item {
+    flex: 3;
+    text-align: left;
+  }
+
+  & .item-title {
+    padding-right: 8px;
+  }
+
+  & .item-subtitle {
+    font-size: 14px;
+    text-transform: lowercase;
+  }
 }

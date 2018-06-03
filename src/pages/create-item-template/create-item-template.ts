@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
+import { ItemTemplatesProvider } from '../../providers/item-templates/item-templates';
 
 /**
  * Generated class for the CreateItemTemplatePage page.
@@ -51,15 +52,48 @@ export class CreateItemTemplatePage {
     damage: 0,
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  loader: Loading;
+
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private provider: ItemTemplatesProvider,
+    public loadingCtrl: LoadingController
+  ) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateItemTemplatePage');
+    var id = this.navParams.get('id');
+    if (!id) return;
+
+    this.loader = this.loadingCtrl.create({
+      content: "Loading item data ..."
+    });
+
+    this.loader.present();
+
+    this.provider.weaponDetails(id)
+      .then(result => {
+        this.weaponModel = result;
+        this.loader.dismiss();
+      })
+      .catch(error => {
+        alert(error.message || error);
+        this.loader.dismiss();
+      });
   }
 
   _handleSave($event) {
     alert(JSON.stringify(this.weaponModel, null, " "));
+
+    this.provider.createWeapon(this.weaponModel)
+    .then(value => {
+      this.navCtrl.pop();
+    })
+    .catch(error => {
+      alert(error.message || error);
+    });
   }
 
 }

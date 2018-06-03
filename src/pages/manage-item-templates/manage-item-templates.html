@@ -28,6 +28,25 @@
 <ion-content padding>
   <div *ngIf="items.length === 0">No entries present</div>
   <ion-list *ngIf="items.length > 0">
-    <div ion-item *ngFor="let item of items"></div>
+    <ion-item *ngFor="let item of items">
+      <button item-start ion-button clear class="disable-hover" [attr.data-id]="item.id" (click)="_handleItemDetailClick($event)">
+        <span class="item-title">{{item.title}}</span>
+        <span>(</span>
+        <span class="item-subtitle">{{item.name}}</span>
+        <span>)</span>
+      </button>
+      <span>
+        <label>Weapon Type: </label>
+        <span>{{item.weaponType}}</span>
+      </span>
+      <span>
+        <label>Material Type: </label>
+        <span>{{item.materialType}}</span>
+      </span>
+      <span>
+        <label>Damage: </label>
+        <span>{{item.damage}}</span>
+      </span>
+    </ion-item>
   </ion-list>
 </ion-content>
