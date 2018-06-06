@@ -84,31 +84,31 @@ CraftingRecipe
   Armor
     Cloth
       [head] -
-      [chest] - Vest
+      [chest] - Vest 10
       [hands] -
-      [legs] - Pants
+      [legs] - Pants 5
       [feet] -
 
     Leather
-      [head] - helmet
-      [chest] - Curias
-      [hands] - Gloves
-      [legs] - Pants
-      [feet] - Boots
+      [head] - Helmet 5
+      [chest] - Curias 15
+      [hands] - Gloves 3
+      [legs] - Pants 10
+      [feet] - Boots 5
 
     Iron
-      [head] - Helmet
-      [chest] - Curias
-      [hands] - Gauntlets
-      [legs] - Greaves
-      [feet] - Boots
+      [head] - Helmet 8
+      [chest] - Curias 20
+      [hands] - Gauntlets 6
+      [legs] - Greaves 15
+      [feet] - Boots 8
 
     Steel
-      [head] - Helmet
-      [chest] - Curias
-      [hands] - Gauntlets
-      [legs] - Greaves
-      [feet] - Boots
+      [head] - Helmet 11
+      [chest] - Curias 25
+      [hands] - Gauntlets 9
+      [legs] - Greaves 20
+      [feet] - Boots 11
 
   Weapons
     Iron
@@ -140,6 +140,11 @@ UI
 add recipe (crafting / alchemy, select ingredient)
 add item (weapon, armor, crafting ingredient, alchemy ingredient, misc (coal, charcoal) )
 item, id, title (computed material type + name), name, description, material type, damage
+
+Weapon
+  id, title, name, weapon type, material type, damage
+Armor
+  id, title, name, armor type, material type, defense
 
 UI inventory
 add item type as stack type (single, stackable)

@@ -10,7 +10,6 @@ import { AppSettings } from '../../models/configuration';
 */
 @Injectable()
 export class ItemTemplatesProvider {
-
   constructor(public http: HttpClient) {
     console.log('Hello ItemTemplatesProvider Provider');
   }
@@ -29,11 +28,32 @@ export class ItemTemplatesProvider {
     return this.http.get(url).toPromise();
   }
 
-  createWeapon(weaponTempalte: any): Promise<any> {
+  createWeapon(weaponTemplate: any): Promise<any> {
     const urlParts = [ AppSettings.apiBaseUrl, "templates", "weapons" ];
     const url = urlParts.join("/");
 
-    return this.http.post(url, weaponTempalte).toPromise();
+    return this.http.post(url, weaponTemplate).toPromise();
   }
 
+  listArmors(): Promise<any> {
+    const urlParts = [ AppSettings.apiBaseUrl, "templates", "armor" ];
+    const url = urlParts.join("/");
+
+    return this.http.get(url).toPromise();
+  }
+
+  armorDetails(id: string | number): any {
+    const urlParts = [ AppSettings.apiBaseUrl, "templates", "armor", id ];
+    const url = urlParts.join("/");
+
+    return this.http.get(url).toPromise();
+  }
+
+
+  createArmor(armorTemplate: any): Promise<any> {
+    const urlParts = [ AppSettings.apiBaseUrl, "templates", "armor" ];
+    const url = urlParts.join("/");
+
+    return this.http.post(url, armorTemplate).toPromise();
+  }
 }

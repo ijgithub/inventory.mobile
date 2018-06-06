@@ -21,6 +21,16 @@ export const materialTypes: any[] = [
   { title: "Steel", value: 4 }
 ];
 
+export const armorTypes: any[] = [
+  { title: "Vest", value: 1 },
+  { title: "Pants", value: 2 },
+  { title: "Helmet", value: 3 },
+  { title: "Curias", value: 4 },
+  { title: "Gloves", value: 5 },
+  { title: "Boots", value: 6 },
+  { title: "Gauntlets", value: 7 },
+  { title: "Greaves", value: 8 },
+];
 
 export function getTemplateTypeTitle(value) {
   var result = "";
@@ -38,6 +48,17 @@ export function getWeaponTypeTitle(value) {
 
   for (let i = 0; i < weaponTypes.length && !result.length; i++) {
     let type = weaponTypes[i];
+    result = type.value === value ? type.title : result;
+  }
+
+  return result;
+}
+
+export function getArmorTypeTitle(value) {
+  var result = "";
+
+  for (let i = 0; i < armorTypes.length && !result.length; i++) {
+    let type = armorTypes[i];
     result = type.value === value ? type.title : result;
   }
 

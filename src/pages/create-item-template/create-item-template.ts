@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { ItemTemplatesProvider } from '../../providers/item-templates/item-templates';
-
+import { templateTypes, weaponTypes, materialTypes, armorTypes } from '../../models/item-template.model';
 /**
  * Generated class for the CreateItemTemplatePage page.
  *
@@ -15,34 +15,13 @@ import { ItemTemplatesProvider } from '../../providers/item-templates/item-templ
 })
 export class CreateItemTemplatePage {
 
-  templateTypes: any[] = [
-    { title: "Weapon", value: "weapon" },
-    { title: "Armor", value: "armor" },
-    { title: "Crafting ingredient", value: "craftingIngredient" },
-    { title: "Alchemy ingredient", value: "alchemyIngredient" },
-    { title: "Consumable", value: "consumable" },
-  ];
+  templateTypes: any[] = templateTypes;
+  templateType: string = "armor";
 
-  templateType: string = "weapon";
-
-  weaponTypes: any[] = [
-    { title: "Short Sword", value: 1 },
-    { title: "Long Sword", value: 2 },
-    { title: "Two-handed Sword", value: 3 },
-    { title: "Hatchet", value: 4 },
-    { title: "Axe", value: 5 }
-  ];
-
+  weaponTypes: any[] = weaponTypes;
   weaponType: string = "";
 
-  materialTypes: any[] = [
-    { title: "Cloth", value: 1 },
-    { title: "Leather", value: 2 },
-    { title: "Iron", value: 3 },
-    { title: "Steel", value: 4 }
-  ];
-
-  materialType: string = "";
+  materialTypes: any[] = materialTypes;
 
   weaponModel: any = {
     weaponType: 1,
@@ -50,6 +29,16 @@ export class CreateItemTemplatePage {
     title: "",
     materialType: 3,
     damage: 0,
+  };
+
+  armorTypes: any[] = armorTypes;
+
+  armorModel: any = {
+    armorType: 1,
+    name: "",
+    title: "",
+    materialType: 1,
+    defense: 0,
   };
 
   loader: Loading;
@@ -73,27 +62,70 @@ export class CreateItemTemplatePage {
 
     this.loader.present();
 
-    this.provider.weaponDetails(id)
-      .then(result => {
-        this.weaponModel = result;
-        this.loader.dismiss();
-      })
-      .catch(error => {
-        alert(error.message || error);
-        this.loader.dismiss();
-      });
+    switch (this.templateType) {
+      case 'weapon':
+        this.provider.weaponDetails(id)
+          .then(result => {
+            this.weaponModel = result;
+            this.loader.dismiss();
+          })
+          .catch(error => {
+            alert(error.message || error);
+            this.loader.dismiss();
+          });
+        break;
+
+      case 'armor':
+        this.provider.armorDetails(id)
+          .then(result => {
+            this.armorModel = result;
+            this.loader.dismiss();
+          })
+          .catch(error => {
+            alert(error.message || error);
+            this.loader.dismiss();
+          });
+        break;
+    }
+
   }
 
   _handleSave($event) {
-    alert(JSON.stringify(this.weaponModel, null, " "));
 
-    this.provider.createWeapon(this.weaponModel)
-    .then(value => {
-      this.navCtrl.pop();
-    })
-    .catch(error => {
-      alert(error.message || error);
-    });
+    switch (this.templateType) {
+      case 'weapon':
+        alert(JSON.stringify(this.weaponModel, null, " "));
+
+        this.provider.createWeapon(this.weaponModel)
+          .then(value => {
+            this.navCtrl.pop();
+          })
+          .catch(error => {
+            alert(error.message || error);
+          });
+        break;
+
+      case 'armor':
+        alert(JSON.stringify(this.armorModel, null, " "));
+
+        this.provider.createArmor(this.armorModel)
+          .then(value => {
+            this.navCtrl.pop();
+          })
+          .catch(error => {
+            alert(error.message || error);
+          });
+        break;
+      case 'craftingIngredient':
+        break;
+      case 'alchemyIngredient':
+        break;
+      case 'consumable':
+        break;
+    }
+
+
+
   }
 
 }

@@ -56,6 +56,35 @@
 
     <ion-card *ngSwitchCase="'armor'">
       <ion-title>Armor</ion-title>
+
+      <ion-item>
+        <ion-label>Armor Type</ion-label>
+        <ion-select [(ngModel)]="armorModel.armorType">
+          <ion-option *ngFor="let item of armorTypes" value="{{item.value}}">{{item.title}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="armorModel.name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Title</ion-label>
+        <ion-input type="text" [(ngModel)]="armorModel.title"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Material Type</ion-label>
+        <ion-select [(ngModel)]="armorModel.materialType">
+          <ion-option *ngFor="let item of materialTypes" value="{{item.value}}">{{item.title}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Defense</ion-label>
+        <ion-input type="number" [(ngModel)]="armorModel.defense"></ion-input>
+      </ion-item>
     </ion-card>
 
     <ion-card *ngSwitchCase="'craftingIngredient'">

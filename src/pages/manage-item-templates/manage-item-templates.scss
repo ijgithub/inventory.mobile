@@ -17,4 +17,16 @@ page-manage-item-templates {
     font-size: 14px;
     text-transform: lowercase;
   }
+
+  & .w-type {
+    padding: 4px 8px;
+  }
+
+  & .m-type {
+    padding: 4px 8px;
+  }
+
+  & .label {
+    font-weight: 500;
+  }
 }

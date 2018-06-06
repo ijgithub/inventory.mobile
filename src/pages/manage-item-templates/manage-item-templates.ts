@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { ItemTemplatesProvider } from '../../providers/item-templates/item-templates';
 import { CreateItemTemplatePage } from '../create-item-template/create-item-template';
-import { getWeaponTypeTitle, getMaterialTypeTitle } from '../../models/item-template.model';
+import { getWeaponTypeTitle, getMaterialTypeTitle, getArmorTypeTitle } from '../../models/item-template.model';
 
 /**
  * Generated class for the ManageItemTemplatesPage page.
@@ -17,6 +17,7 @@ import { getWeaponTypeTitle, getMaterialTypeTitle } from '../../models/item-temp
 export class ManageItemTemplatesPage {
 
   items: any = [];
+  armors: any[] = [];
   loader: Loading;
 
   constructor(
@@ -34,17 +35,30 @@ export class ManageItemTemplatesPage {
       content: "Loading items ..."
     });
     this.loader.present();
-    this._provider.listWeapons().
-      then(weapons => {
-        let tmpItems = weapons;
+
+    const proms = [];
+    proms.push(this._provider.listWeapons());
+    proms.push(this._provider.listArmors());
+
+    Promise.all(proms)
+      .then(values => {
+        let tmpItems = values[0];
         tmpItems.forEach(tmpItem => {
           tmpItem.weaponType = getWeaponTypeTitle(tmpItem.weaponType);
           tmpItem.materialType = getMaterialTypeTitle(tmpItem.materialType);
         });
 
+        let tmpArmors = values[1];
+        tmpArmors.forEach(tmpArmor => {
+          tmpArmor.armorType = getArmorTypeTitle(tmpArmor.armorType);
+          tmpArmor.materialType = getMaterialTypeTitle(tmpArmor.armorType);
+        });
+
         this.items = tmpItems;
+        this.armors = tmpArmors;
         this.loader.dismiss();
-      }).catch(error => {
+      })
+      .catch(error => {
         alert(error.message || error);
         this.loader.dismiss();
       });
