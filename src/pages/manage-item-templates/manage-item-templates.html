@@ -37,8 +37,8 @@
           <span>)</span>
         </span>
         <span class="w-type" item-content>
-          <label>Weapon Type: </label>
-          <span class="label">{{item.weaponType}}</span>
+          <label>{{_computeItemTypeLabel(item)}}</label>
+          <span class="label">{{item.itemType}}</span>
         </span>
         <span class="m-type" item-content>
           <label>Material Type: </label>
@@ -56,4 +56,7 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+  <!-- <button ion-button color="primary" (click)="_handleImportDataClick()">
+    <ion-icon name="upload"></ion-icon> Import Data
+  </button> -->
 </ion-content>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { ItemTemplatesProvider } from '../../providers/item-templates/item-templates';
 import { CreateItemTemplatePage } from '../create-item-template/create-item-template';
-import { getItemTypeTitle, getMaterialTypeTitle, ItemTemplate } from '../../models/item-template.model';
+import { getItemTypeTitle, getMaterialTypeTitle, ItemTemplate, exportedData, TemplateType } from '../../models/item-template.model';
 
 /**
  * Generated class for the ManageItemTemplatesPage page.
@@ -55,7 +55,7 @@ export class ManageItemTemplatesPage {
           // iTempl.value = tmpItem.damage;
           // itemTemplatesArr.push(iTempl);
 
-          tmpItem.itemType = getItemTypeTitle(tmpItem.type);
+          tmpItem.itemType = getItemTypeTitle(tmpItem.itemType);
           tmpItem.materialType = getMaterialTypeTitle(tmpItem.materialType);
         });
 
@@ -70,6 +70,16 @@ export class ManageItemTemplatesPage {
         this.loader.dismiss();
       });
 
+  }
+
+  _computeItemTypeLabel(item): string {
+
+    if (item.templateType === TemplateType.Weapon) {
+      return "Weapon Type";
+
+    } else if (item.templateType === TemplateType.Armor) {
+      return "Armor Type";
+    }
   }
 
   ionViewDidLoad() {
@@ -100,7 +110,45 @@ export class ManageItemTemplatesPage {
         this.loader.dismiss();
         alert(error.message || error);
       });
+  }
 
+  _handleImportDataClick(): void {
+    const importPromisses = [];
+
+    this.loader = this.loadingCtrl.create({
+      content: 'Importing items. Please wait...'
+    });
+    this.loader.present();
+
+    exportedData.forEach(item => {
+      console.log(`Item is ${JSON.stringify(item)}`);
+      let itemTemplate: any = {};
+      itemTemplate.id = 0;
+      itemTemplate.itemType = item.itemType;
+      itemTemplate.materialType = item.materialType;
+      itemTemplate.value = item.value;
+      itemTemplate.name = item.name;
+      itemTemplate.title = item.title;
+
+      if (item.templateType === "weapon") {
+        itemTemplate.templateType = TemplateType.Weapon;
+
+      } else if (item.templateType === "armor") {
+        itemTemplate.templateType = TemplateType.Armor;
+      }
+
+      const itemPromise = this._provider.create(itemTemplate);
+      importPromisses.push(itemPromise);
+    });
+
+    Promise.all(importPromisses)
+      .then(results => {
+        this.loader.dismiss();
+      })
+      .catch(error => {
+        this.loader.dismiss();
+        alert(error.message || error);
+      })
   }
 
 }

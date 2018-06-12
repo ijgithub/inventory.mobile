@@ -1,7 +1,7 @@
-import { Component, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { ItemTemplatesProvider } from '../../providers/item-templates/item-templates';
-import { templateTypes, weaponTypes, materialTypes, armorTypes, getItemTypeTitle, TemplateType, getTemplateTypeTitle, weaponMaterialTypes } from '../../models/item-template.model';
+import { templateTypes, weaponTypes, materialTypes, armorTypes, TemplateType, getTemplateTypeTitle, weaponMaterialTypes } from '../../models/item-template.model';
 /**
  * Generated class for the CreateItemTemplatePage page.
  *
