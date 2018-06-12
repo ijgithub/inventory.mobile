@@ -7,102 +7,66 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>CreateItemTemplate</ion-title>
+    <ion-title>{{pageTitle}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 <ion-content padding>
   <ion-item>
     <ion-label>Select template type</ion-label>
-    <ion-select [(ngModel)]="templateType">
+    <ion-select [(ngModel)]="itemTemplateModel.templateType" (ionChange)="_handleTemplateTypeChange($event)">
       <ion-option *ngFor="let item of templateTypes" value="{{item.value}}">{{item.title}}</ion-option>
     </ion-select>
   </ion-item>
 
-  <div [ngSwitch]="templateType">
-    <ion-card *ngSwitchCase="'weapon'">
-      <ion-title>Weapon</ion-title>
+  <ion-card>
+    <ion-title>{{cardUI.title}}</ion-title>
 
-      <ion-item>
-        <ion-label>Weapon Type</ion-label>
-        <ion-select [(ngModel)]="weaponModel.weaponType">
-          <ion-option *ngFor="let item of weaponTypes" value="{{item.value}}">{{item.title}}</ion-option>
-        </ion-select>
-      </ion-item>
+    <ion-item>
+      <ion-label>{{cardUI.itemType}}</ion-label>
+      <ion-select [(ngModel)]="itemTemplateModel.itemType">
+        <ion-option *ngFor="let item of cardUI.itemTypes" value="{{item.value}}">{{item.title}}</ion-option>
+      </ion-select>
+    </ion-item>
 
-      <ion-item>
-        <ion-label>Name</ion-label>
-        <ion-input type="text" [(ngModel)]="weaponModel.name"></ion-input>
-      </ion-item>
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input type="text" [(ngModel)]="itemTemplateModel.name"></ion-input>
+    </ion-item>
 
-      <ion-item>
-        <ion-label>Title</ion-label>
-        <ion-input type="text" [(ngModel)]="weaponModel.title"></ion-input>
-      </ion-item>
+    <ion-item>
+      <ion-label>Title</ion-label>
+      <ion-input type="text" [(ngModel)]="itemTemplateModel.title"></ion-input>
+    </ion-item>
 
-      <ion-item>
-        <ion-label>Material Type</ion-label>
-        <ion-select [(ngModel)]="weaponModel.materialType">
-          <ion-option *ngFor="let item of materialTypes" value="{{item.value}}">{{item.title}}</ion-option>
-        </ion-select>
-      </ion-item>
+    <ion-item>
+      <ion-label>Material Type</ion-label>
+      <ion-select [(ngModel)]="itemTemplateModel.materialType">
+        <ion-option *ngFor="let item of cardUI.materialTypes" value="{{item.value}}">{{item.title}}</ion-option>
+      </ion-select>
+    </ion-item>
 
-      <ion-item>
-        <ion-label>Damage</ion-label>
-        <ion-input type="number" [(ngModel)]="weaponModel.damage"></ion-input>
-      </ion-item>
+    <ion-item>
+      <ion-label>{{cardUI.valueLabel}}</ion-label>
+      <ion-input type="number" [(ngModel)]="itemTemplateModel.value"></ion-input>
+    </ion-item>
 
-    </ion-card>
+  </ion-card>
 
-    <ion-card *ngSwitchCase="'armor'">
-      <ion-title>Armor</ion-title>
-
-      <ion-item>
-        <ion-label>Armor Type</ion-label>
-        <ion-select [(ngModel)]="armorModel.armorType">
-          <ion-option *ngFor="let item of armorTypes" value="{{item.value}}">{{item.title}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Name</ion-label>
-        <ion-input type="text" [(ngModel)]="armorModel.name"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Title</ion-label>
-        <ion-input type="text" [(ngModel)]="armorModel.title"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Material Type</ion-label>
-        <ion-select [(ngModel)]="armorModel.materialType">
-          <ion-option *ngFor="let item of materialTypes" value="{{item.value}}">{{item.title}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Defense</ion-label>
-        <ion-input type="number" [(ngModel)]="armorModel.defense"></ion-input>
-      </ion-item>
-    </ion-card>
-
-    <ion-card *ngSwitchCase="'craftingIngredient'">
-      <ion-title>Crafting Ingredient</ion-title>
-    </ion-card>
-
-    <ion-card *ngSwitchCase="'alchemyIngredient'">
-      <ion-title>Alchemy Ingredient</ion-title>
-    </ion-card>
-
-    <ion-card *ngSwitchCase="'consumable'">
-      <ion-title>Consumable</ion-title>
-    </ion-card>
-
-  </div>
-
-  <ion-buttons>
-    <button ion-button (click)="_handleSave($event)">Save</button>
-  </ion-buttons>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10 [attr.hidden]="isAddAnotherHidden">
+        <ion-item>
+          <ion-label>Add another?</ion-label>
+          <ion-checkbox [(ngModel)]="addAnother"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-buttons>
+          <button ion-button (click)="_handleSave($event)">Save</button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

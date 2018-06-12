@@ -28,49 +28,32 @@
 <ion-content padding>
   <div *ngIf="items.length === 0">No entries present</div>
   <ion-list *ngIf="items.length > 0">
-    <ion-item *ngFor="let item of items" [attr.data-id]="item.id" (click)="_handleItemDetailClick($event)">
-      <span ion-label>
-        <span class="item-title">{{item.title}}</span>
-        <span>(</span>
-        <span class="item-subtitle">{{item.name}}</span>
-        <span>)</span>
-      </span>
-      <span class="w-type" item-content>
-        <label>Weapon Type: </label>
-        <span class="label">{{item.weaponType}}</span>
-      </span>
-      <span class="m-type" item-content>
-        <label>Material Type: </label>
-        <span class="label">{{item.materialType}}</span>
-      </span>
-      <span item-end>
-        <label>Damage: </label>
-        <span class="label">{{item.damage}}</span>
-      </span>
-    </ion-item>
-  </ion-list>
-
-  <div *ngIf="armors.length === 0">No entries present</div>
-  <ion-list *ngIf="armors.length > 0">
-    <ion-item *ngFor="let item of armors" [attr.data-id]="item.id" (click)="_handleItemDetailClick($event)">
-      <span ion-label>
-        <span class="item-title">{{item.title}}</span>
-        <span>(</span>
-        <span class="item-subtitle">{{item.name}}</span>
-        <span>)</span>
-      </span>
-      <span class="w-type" item-content>
-        <label>Armor Type: </label>
-        <span class="label">{{item.armorType}}</span>
-      </span>
-      <span class="m-type" item-content>
-        <label>Material Type: </label>
-        <span class="label">{{item.materialType}}</span>
-      </span>
-      <span item-end>
-        <label>Defense: </label>
-        <span class="label">{{item.defense}}</span>
-      </span>
-    </ion-item>
+    <ion-item-sliding *ngFor="let item of items">
+      <ion-item [attr.data-id]="item.id" (click)="_handleItemDetailClick($event)">
+        <span ion-label>
+          <span class="item-title">{{item.title}}</span>
+          <span>(</span>
+          <span class="item-subtitle">{{item.name}}</span>
+          <span>)</span>
+        </span>
+        <span class="w-type" item-content>
+          <label>Weapon Type: </label>
+          <span class="label">{{item.weaponType}}</span>
+        </span>
+        <span class="m-type" item-content>
+          <label>Material Type: </label>
+          <span class="label">{{item.materialType}}</span>
+        </span>
+        <span item-end>
+          <label>Damage: </label>
+          <span class="label">{{item.value}}</span>
+        </span>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="primary" (click)="_handleItemDeleteClick(item)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>

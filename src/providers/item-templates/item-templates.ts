@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppSettings } from '../../models/configuration';
+import { ItemTemplate } from '../../models/item-template.model';
 
 /*
   Generated class for the ItemTemplatesProvider provider.
@@ -14,46 +15,31 @@ export class ItemTemplatesProvider {
     console.log('Hello ItemTemplatesProvider Provider');
   }
 
-  listWeapons(): Promise<any> {
-    const urlParts = [ AppSettings.apiBaseUrl, "templates", "weapons" ];
+  list(): Promise<any> {
+    const urlParts = [ AppSettings.apiBaseUrl, "templates"];
     const url = urlParts.join("/");
 
     return this.http.get(url).toPromise();
   }
 
-  weaponDetails(id: string | number): any {
-    const urlParts = [ AppSettings.apiBaseUrl, "templates", "weapons", id ];
+  details(id: string | number): any {
+    const urlParts = [ AppSettings.apiBaseUrl, "templates", id ];
     const url = urlParts.join("/");
 
     return this.http.get(url).toPromise();
   }
 
-  createWeapon(weaponTemplate: any): Promise<any> {
-    const urlParts = [ AppSettings.apiBaseUrl, "templates", "weapons" ];
+  create(itemTemplate: ItemTemplate): Promise<any> {
+    const urlParts = [ AppSettings.apiBaseUrl, "templates" ];
     const url = urlParts.join("/");
 
-    return this.http.post(url, weaponTemplate).toPromise();
+    return this.http.post(url, itemTemplate).toPromise();
   }
 
-  listArmors(): Promise<any> {
-    const urlParts = [ AppSettings.apiBaseUrl, "templates", "armor" ];
+  delete(id: number): Promise<any> {
+    const urlParts = [ AppSettings.apiBaseUrl, "templates", id ];
     const url = urlParts.join("/");
 
-    return this.http.get(url).toPromise();
-  }
-
-  armorDetails(id: string | number): any {
-    const urlParts = [ AppSettings.apiBaseUrl, "templates", "armor", id ];
-    const url = urlParts.join("/");
-
-    return this.http.get(url).toPromise();
-  }
-
-
-  createArmor(armorTemplate: any): Promise<any> {
-    const urlParts = [ AppSettings.apiBaseUrl, "templates", "armor" ];
-    const url = urlParts.join("/");
-
-    return this.http.post(url, armorTemplate).toPromise();
+    return this.http.delete(url).toPromise();
   }
 }

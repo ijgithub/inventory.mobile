@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { ItemTemplatesProvider } from '../../providers/item-templates/item-templates';
-import { templateTypes, weaponTypes, materialTypes, armorTypes } from '../../models/item-template.model';
+import { templateTypes, weaponTypes, materialTypes, armorTypes, getItemTypeTitle, TemplateType, getTemplateTypeTitle, weaponMaterialTypes } from '../../models/item-template.model';
 /**
  * Generated class for the CreateItemTemplatePage page.
  *
@@ -15,31 +15,28 @@ import { templateTypes, weaponTypes, materialTypes, armorTypes } from '../../mod
 })
 export class CreateItemTemplatePage {
 
+  pageTitle = "Create a template";
+  addAnother: boolean = false;
+  isAddAnotherHidden: boolean = false;
+
   templateTypes: any[] = templateTypes;
-  templateType: string = "armor";
+  templateType: number = TemplateType.Weapon;
 
-  weaponTypes: any[] = weaponTypes;
-  weaponType: string = "";
+  cardUI: any = {};
 
-  materialTypes: any[] = materialTypes;
-
-  weaponModel: any = {
-    weaponType: 1,
+  itemTemplateModel: any = {
+    templateType: TemplateType.Weapon,
+    itemType: "1",
     name: "",
     title: "",
     materialType: 3,
-    damage: 0,
+    value: 0,
   };
 
-  armorTypes: any[] = armorTypes;
-
-  armorModel: any = {
-    armorType: 1,
-    name: "",
-    title: "",
-    materialType: 1,
-    defense: 0,
-  };
+  valueLabelTitles: any = {};
+  itemTypeLabels: any = {};
+  itemTypes: any = {};
+  materialTypes: any = {};
 
   loader: Loading;
 
@@ -49,12 +46,53 @@ export class CreateItemTemplatePage {
     private provider: ItemTemplatesProvider,
     public loadingCtrl: LoadingController
   ) {
+    this.valueLabelTitles[TemplateType.Weapon] = 'Damage';
+    this.valueLabelTitles[TemplateType.Armor] = 'Defense';
+
+    this.itemTypeLabels[TemplateType.Weapon] = 'Weapon Type';
+    this.itemTypeLabels[TemplateType.Armor] = 'Armor Type';
+
+    this.itemTypes[TemplateType.Weapon] = weaponTypes;
+    this.itemTypes[TemplateType.Armor] = armorTypes;
+
+    this.materialTypes[TemplateType.Weapon] = weaponMaterialTypes;
+    this.materialTypes[TemplateType.Armor] = materialTypes;
+
+    const ttype = this.itemTemplateModel.templateType;
+    this._updateUI(ttype);
+  }
+
+  _handleTemplateTypeChange($event) {
+    this.itemTemplateModel.templateType = +this.itemTemplateModel.templateType;
+    this.itemTemplateModel.materialType = +this.itemTemplateModel.materialType;
+
+    this._updateUI(this.itemTemplateModel.templateType);
+  }
+
+  _updateUI(ttype) {
+    this.cardUI.title = getTemplateTypeTitle(ttype);
+    this.cardUI.itemType = this.itemTypeLabels[ttype];
+    this.cardUI.valueLabel = this.valueLabelTitles[ttype];
+    this.cardUI.itemTypes = this.itemTypes[ttype];
+    this.cardUI.materialTypes = this.materialTypes[ttype];
+
+    if (ttype === TemplateType.Armor) {
+      this.itemTemplateModel.itemType = "6";
+
+    } else if (ttype === TemplateType.Weapon) {
+      this.itemTemplateModel.itemType = "1";
+      if (this.itemTemplateModel.materialType < 3) {
+        this.itemTemplateModel.materialType = 3;
+      }
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateItemTemplatePage');
     var id = this.navParams.get('id');
     if (!id) return;
+    this.isAddAnotherHidden = true;
+    this.pageTitle = "Modify template";
 
     this.loader = this.loadingCtrl.create({
       content: "Loading item data ..."
@@ -62,70 +100,29 @@ export class CreateItemTemplatePage {
 
     this.loader.present();
 
-    switch (this.templateType) {
-      case 'weapon':
-        this.provider.weaponDetails(id)
-          .then(result => {
-            this.weaponModel = result;
-            this.loader.dismiss();
-          })
-          .catch(error => {
-            alert(error.message || error);
-            this.loader.dismiss();
-          });
-        break;
-
-      case 'armor':
-        this.provider.armorDetails(id)
-          .then(result => {
-            this.armorModel = result;
-            this.loader.dismiss();
-          })
-          .catch(error => {
-            alert(error.message || error);
-            this.loader.dismiss();
-          });
-        break;
-    }
-
+    this.provider.details(id)
+      .then(result => {
+        this.itemTemplateModel = result;
+        this.loader.dismiss();
+      })
+      .catch(error => {
+        alert(error.message || error);
+        this.loader.dismiss();
+      });
   }
 
   _handleSave($event) {
+    alert(JSON.stringify(this.itemTemplateModel, null, " "));
 
-    switch (this.templateType) {
-      case 'weapon':
-        alert(JSON.stringify(this.weaponModel, null, " "));
+    this.provider.create(this.itemTemplateModel)
+      .then(value => {
+        if (this.addAnother) return;
 
-        this.provider.createWeapon(this.weaponModel)
-          .then(value => {
-            this.navCtrl.pop();
-          })
-          .catch(error => {
-            alert(error.message || error);
-          });
-        break;
-
-      case 'armor':
-        alert(JSON.stringify(this.armorModel, null, " "));
-
-        this.provider.createArmor(this.armorModel)
-          .then(value => {
-            this.navCtrl.pop();
-          })
-          .catch(error => {
-            alert(error.message || error);
-          });
-        break;
-      case 'craftingIngredient':
-        break;
-      case 'alchemyIngredient':
-        break;
-      case 'consumable':
-        break;
-    }
-
-
+        this.navCtrl.pop();
+      })
+      .catch(error => {
+        alert(error.message || error);
+      });
 
   }
-
 }

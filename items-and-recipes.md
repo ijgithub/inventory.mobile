@@ -112,18 +112,18 @@ CraftingRecipe
 
   Weapons
     Iron
-      Short Sword
-      Long Sword
-      Two-Handed Sword
-      Hatchet
-      Axe
+      Short Sword 13
+      Long Sword 20
+      Two-Handed Sword 30
+      Hatchet 15
+      Axe 20
 
     Steel
-      Short Sword
-      Long Sword
-      Two-Handed Sword
-      Hatchet
-      Axe
+      Short Sword 20
+      Long Sword 30
+      Two-Handed Sword 45
+      Hatchet 25
+      Axe 30
 
 Miscellaneous
 

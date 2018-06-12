@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { ItemTemplatesProvider } from '../../providers/item-templates/item-templates';
 import { CreateItemTemplatePage } from '../create-item-template/create-item-template';
-import { getWeaponTypeTitle, getMaterialTypeTitle, getArmorTypeTitle } from '../../models/item-template.model';
+import { getItemTypeTitle, getMaterialTypeTitle, ItemTemplate } from '../../models/item-template.model';
 
 /**
  * Generated class for the ManageItemTemplatesPage page.
@@ -16,8 +16,7 @@ import { getWeaponTypeTitle, getMaterialTypeTitle, getArmorTypeTitle } from '../
 })
 export class ManageItemTemplatesPage {
 
-  items: any = [];
-  armors: any[] = [];
+  items: ItemTemplate[] = [];
   loader: Loading;
 
   constructor(
@@ -31,37 +30,46 @@ export class ManageItemTemplatesPage {
   ionViewDidEnter() {
     console.log('ionViewDidEnter manage-item templatesPage');
 
+    this._refreshItems();
+  }
+
+  _refreshItems(): void {
     this.loader = this.loadingCtrl.create({
       content: "Loading items ..."
     });
     this.loader.present();
 
-    const proms = [];
-    proms.push(this._provider.listWeapons());
-    proms.push(this._provider.listArmors());
+    this._provider.list()
+      .then(itemTemplates => {
+        // const itemTemplatesArr: ItemTemplate[] = [];
 
-    Promise.all(proms)
-      .then(values => {
-        let tmpItems = values[0];
-        tmpItems.forEach(tmpItem => {
-          tmpItem.weaponType = getWeaponTypeTitle(tmpItem.weaponType);
+
+        itemTemplates.forEach(tmpItem => {
+          // const iTempl: ItemTemplate = new ItemTemplate();
+          // iTempl.id = tmpItem.id;
+          // iTempl.templateType = "weapon";
+          // iTempl.title = tmpItem.title;
+          // iTempl.name = tmpItem.name;
+          // iTempl.materialType = tmpItem.materialType;
+          // iTempl.itemType = tmpItem.weaponType;
+          // iTempl.value = tmpItem.damage;
+          // itemTemplatesArr.push(iTempl);
+
+          tmpItem.itemType = getItemTypeTitle(tmpItem.type);
           tmpItem.materialType = getMaterialTypeTitle(tmpItem.materialType);
         });
 
-        let tmpArmors = values[1];
-        tmpArmors.forEach(tmpArmor => {
-          tmpArmor.armorType = getArmorTypeTitle(tmpArmor.armorType);
-          tmpArmor.materialType = getMaterialTypeTitle(tmpArmor.armorType);
-        });
+        this.items = itemTemplates;
 
-        this.items = tmpItems;
-        this.armors = tmpArmors;
+        // console.log(JSON.stringify(itemTemplatesArr));
+
         this.loader.dismiss();
       })
       .catch(error => {
         alert(error.message || error);
         this.loader.dismiss();
       });
+
   }
 
   ionViewDidLoad() {
@@ -75,6 +83,24 @@ export class ManageItemTemplatesPage {
   public _handleItemDetailClick($event): void {
     var id = $event.currentTarget.getAttribute("data-id");
     this.navCtrl.push(CreateItemTemplatePage, { id: id });
+  }
+
+  _handleItemDeleteClick(item): void {
+    this.loader = this.loadingCtrl.create({
+      content: `Deleting item ${item.name}`
+    });
+    this.loader.present();
+
+    this._provider.delete(item.id)
+      .then(result => {
+        this.loader.dismiss();
+        this._refreshItems();
+      })
+      .catch(error => {
+        this.loader.dismiss();
+        alert(error.message || error);
+      });
+
   }
 
 }
