@@ -1,0 +1,72 @@
+<!--
+  Generated template for the CreateRecipePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create Recipe</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="recipeModel">
+  <ion-card>
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Title</ion-label>
+      <ion-input type="text" formControlName="title"></ion-input>
+    </ion-item>
+  </ion-card>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <ion-card>
+          <label for="">Inputs</label>
+
+          <ng-container *ngFor="let input of inputs">
+            <div>{{input | json}}</div>
+          </ng-container>
+
+          <button ion-button (click)="_handleSave($event)">Add</button>
+        </ion-card>
+
+      </ion-col>
+      <ion-col col-6>
+        <ion-card>
+          <label for="">Outputs</label>
+
+          <ng-container *ngFor="let output of outputs">
+            <div>{{output | json}}</div>
+          </ng-container>
+
+          <button ion-button (click)="_handleSave($event)">Add</button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10 *ngIf="!isAddAnotherHidden">
+        <ion-item>
+          <ion-label>Add another?</ion-label>
+          <ion-checkbox formControlName="addAnother"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-buttons>
+          <button ion-button (click)="_handleSave($event)">Save</button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
+</ion-content>

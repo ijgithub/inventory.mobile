@@ -13,6 +13,9 @@ import { InventoryProvider } from '../providers/inventory/inventory';
 import { HttpClientModule } from '@angular/common/http';
 import { ItemTemplatesProvider } from '../providers/item-templates/item-templates';
 import { CreateItemTemplatePage } from '../pages/create-item-template/create-item-template';
+import { RecipesProvider } from '../providers/recipes-provider';
+import { CreateRecipePage } from '../pages/create-recipe/create-recipe';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,12 +24,14 @@ import { CreateItemTemplatePage } from '../pages/create-item-template/create-ite
     ManageInventoryPage,
     ManageItemTemplatesPage,
     ManageRecipesPage,
-    CreateItemTemplatePage
+    CreateItemTemplatePage,
+    CreateRecipePage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,14 +40,16 @@ import { CreateItemTemplatePage } from '../pages/create-item-template/create-ite
     ManageInventoryPage,
     ManageItemTemplatesPage,
     ManageRecipesPage,
-    CreateItemTemplatePage
+    CreateItemTemplatePage,
+    CreateRecipePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     InventoryProvider,
-    ItemTemplatesProvider
+    ItemTemplatesProvider,
+    RecipesProvider
   ]
 })
 export class AppModule {}
