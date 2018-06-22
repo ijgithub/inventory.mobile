@@ -12,7 +12,7 @@ import { ManageInventoryPage } from '../manage-inventory/manage-inventory';
 export class HomePage {
   @ViewChild(Nav) nav: Nav;
   // rootPage = ManageInventoryPage;
-  rootPage = ManageItemTemplatesPage;
+  rootPage = ManageRecipesPage;
 
   constructor(
     public navCtrl: NavController,

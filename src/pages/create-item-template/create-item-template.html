@@ -22,7 +22,7 @@
   <ion-card>
     <ion-title>{{cardUI.title}}</ion-title>
 
-    <ion-item>
+    <ion-item *ngIf="cardUI.isItemTypeVisible">
       <ion-label>{{cardUI.itemType}}</ion-label>
       <ion-select [(ngModel)]="itemTemplateModel.itemType">
         <ion-option *ngFor="let item of cardUI.itemTypes" value="{{item.value}}">{{item.title}}</ion-option>
@@ -46,7 +46,7 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="cardUI.isValueVisible">
       <ion-label>{{cardUI.valueLabel}}</ion-label>
       <ion-input type="number" [(ngModel)]="itemTemplateModel.value"></ion-input>
     </ion-item>
@@ -55,7 +55,7 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col col-10 [attr.hidden]="isAddAnotherHidden">
+      <ion-col col-10 *ngIf="!isAddAnotherHidden">
         <ion-item>
           <ion-label>Add another?</ion-label>
           <ion-checkbox [(ngModel)]="addAnother"></ion-checkbox>

@@ -25,11 +25,11 @@ export class CreateItemTemplatePage {
   cardUI: any = {};
 
   itemTemplateModel: any = {
-    templateType: TemplateType.Weapon,
+    templateType: TemplateType.CraftingIngredient,
     itemType: "1",
     name: "",
     title: "",
-    materialType: 3,
+    materialType: 1,
     value: 0,
   };
 
@@ -57,6 +57,7 @@ export class CreateItemTemplatePage {
 
     this.materialTypes[TemplateType.Weapon] = weaponMaterialTypes;
     this.materialTypes[TemplateType.Armor] = materialTypes;
+    this.materialTypes[TemplateType.CraftingIngredient] = materialTypes;
 
     const ttype = this.itemTemplateModel.templateType;
     this._updateUI(ttype);
@@ -70,6 +71,8 @@ export class CreateItemTemplatePage {
   }
 
   _updateUI(ttype) {
+    this.cardUI.isItemTypeVisible = (ttype == TemplateType.Weapon || ttype == TemplateType.Armor);
+    this.cardUI.isValueVisible = (ttype == TemplateType.Weapon || ttype == TemplateType.Armor);
     this.cardUI.title = getTemplateTypeTitle(ttype);
     this.cardUI.itemType = this.itemTypeLabels[ttype];
     this.cardUI.valueLabel = this.valueLabelTitles[ttype];

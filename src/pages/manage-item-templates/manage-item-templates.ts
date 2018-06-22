@@ -41,35 +41,18 @@ export class ManageItemTemplatesPage {
 
     this._provider.list()
       .then(itemTemplates => {
-        // const itemTemplatesArr: ItemTemplate[] = [];
-
-
         itemTemplates.forEach(tmpItem => {
-          // const iTempl: ItemTemplate = new ItemTemplate();
-          // iTempl.id = tmpItem.id;
-          // iTempl.templateType = "weapon";
-          // iTempl.title = tmpItem.title;
-          // iTempl.name = tmpItem.name;
-          // iTempl.materialType = tmpItem.materialType;
-          // iTempl.itemType = tmpItem.weaponType;
-          // iTempl.value = tmpItem.damage;
-          // itemTemplatesArr.push(iTempl);
-
           tmpItem.itemType = getItemTypeTitle(tmpItem.itemType);
           tmpItem.materialType = getMaterialTypeTitle(tmpItem.materialType);
         });
 
         this.items = itemTemplates;
-
-        // console.log(JSON.stringify(itemTemplatesArr));
-
         this.loader.dismiss();
       })
       .catch(error => {
         alert(error.message || error);
         this.loader.dismiss();
       });
-
   }
 
   _computeItemTypeLabel(item): string {
