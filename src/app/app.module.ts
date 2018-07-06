@@ -16,6 +16,7 @@ import { CreateItemTemplatePage } from '../pages/create-item-template/create-ite
 import { RecipesProvider } from '../providers/recipes-provider';
 import { CreateRecipePage } from '../pages/create-recipe/create-recipe';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SelectItemTemplatePage } from '../pages/select-item-template/select-item-template';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ManageItemTemplatesPage,
     ManageRecipesPage,
     CreateItemTemplatePage,
-    CreateRecipePage
+    CreateRecipePage,
+    SelectItemTemplatePage,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ManageItemTemplatesPage,
     ManageRecipesPage,
     CreateItemTemplatePage,
-    CreateRecipePage
+    CreateRecipePage,
+    SelectItemTemplatePage,
   ],
   providers: [
     StatusBar,

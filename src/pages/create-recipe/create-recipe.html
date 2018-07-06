@@ -13,60 +13,83 @@
 </ion-header>
 <ion-content padding>
   <form [formGroup]="recipeModel">
-  <ion-card>
-    <ion-item>
-      <ion-label>Name</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
-    </ion-item>
+    <ion-card>
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Title</ion-label>
-      <ion-input type="text" formControlName="title"></ion-input>
-    </ion-item>
-  </ion-card>
+      <ion-item>
+        <ion-label>Title</ion-label>
+        <ion-input type="text" formControlName="title"></ion-input>
+      </ion-item>
+    </ion-card>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col col-6>
-        <ion-card>
-          <label for="">Inputs</label>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <ion-card>
+            <label for="">Inputs</label>
+            <p>Add input treba da otvori modal gde ce da se izabere item iz liste</p>
+            <p>Za dodati item treba da postoji mogucnost change i remove</p>
+            <ng-container formArrayName="inputs">
+              <ng-container *ngFor="let input of inputs.controls; let i=index" [formGroupName]="i">
+                <ion-card>
+                  <ion-card-header>{{input.get("title").value}}</ion-card-header>
+                  <ion-card-content>
+                    <ion-label>{{input.get("name").value}}</ion-label>
+                    <ion-label>{{input.get("value").value}}</ion-label>
+                    <ion-label>{{input.get("materialType").value}}</ion-label>
+                    <ion-label>{{input.get("itemType").value}}</ion-label>
+                    <ion-label>{{input.get("templateType").value}}</ion-label>
+                  </ion-card-content>
+                </ion-card>
+              </ng-container>
+            </ng-container>
 
-          <ng-container *ngFor="let input of inputs">
-            <div>{{input | json}}</div>
-          </ng-container>
+            <button ion-button (click)="_addInput($event)">Add</button>
+          </ion-card>
 
-          <button ion-button (click)="_handleSave($event)">Add</button>
-        </ion-card>
+        </ion-col>
+        <ion-col col-6>
+          <ion-card>
+            <label for="">Outputs</label>
+            <p>Add input treba da otvori modal gde ce da se izabere item iz liste</p>
+            <p>Za dodati item treba da postoji mogucnost change i remove</p>
 
-      </ion-col>
-      <ion-col col-6>
-        <ion-card>
-          <label for="">Outputs</label>
+            <ng-container formArrayName="outputs">
+              <ng-container *ngFor="let output of outputs.controls; let i=index" [formGroupName]="i">
+                  <ion-item>
+                      <ion-label>Output Name</ion-label>
+                      <ion-input type="text" formControlName="outputName"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Output Title</ion-label>
+                      <ion-input type="text" formControlName="outputTitle"></ion-input>
+                    </ion-item>
+              </ng-container>
+            </ng-container>
 
-          <ng-container *ngFor="let output of outputs">
-            <div>{{output | json}}</div>
-          </ng-container>
+            <button ion-button (click)="_addOutput($event)">Add</button>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-          <button ion-button (click)="_handleSave($event)">Add</button>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col col-10 *ngIf="!isAddAnotherHidden">
-        <ion-item>
-          <ion-label>Add another?</ion-label>
-          <ion-checkbox formControlName="addAnother"></ion-checkbox>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-buttons>
-          <button ion-button (click)="_handleSave($event)">Save</button>
-        </ion-buttons>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</form>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-10 *ngIf="!isAddAnotherHidden">
+          <ion-item>
+            <ion-label>Add another?</ion-label>
+            <ion-checkbox formControlName="addAnother"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-buttons>
+            <button ion-button (click)="_handleSave($event)">Save</button>
+          </ion-buttons>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>

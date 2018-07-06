@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { SelectItemTemplatePage } from '../select-item-template/select-item-template';
 
 /**
  * Generated class for the CreateRecipePage page.
@@ -17,20 +18,27 @@ export class CreateRecipePage {
 
   recipeModel: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.recipeModel = new FormGroup({
-      name: new FormControl(),
-      title: new FormControl(),
-      addAnother: new FormControl(),
-      inputs: new FormArray([
-        new FormControl("inputName"),
-        new FormControl("inputTitle"),
-      ]),
-      outputs: new FormArray([
-        new FormControl("outputName"),
-        new FormControl("outputTitle"),
-      ]),
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public modalController: ModalController,
+    private fb: FormBuilder) {
+
+    this.recipeModel = this.fb.group({
+      name: '',
+      title: '',
+      addAnother: false,
+      inputs: this.fb.array([]),
+      outputs: this.fb.array([]),
     });
+  }
+
+  get inputs(): FormArray {
+    return this.recipeModel.get('inputs') as FormArray;
+  }
+
+  get outputs(): FormArray {
+    return this.recipeModel.get('outputs') as FormArray;
   }
 
   ionViewDidLoad() {
@@ -41,8 +49,24 @@ export class CreateRecipePage {
     console.log('ionViewDidEnter CreateRecipePage');
   }
 
-  _handleSave($event) {
+  _addInput($event) {
+    const modal = this.modalController.create(SelectItemTemplatePage, null, { showBackdrop: true });
+    modal.present();
 
+    modal.onDidDismiss((data, role) => {
+      if (role !== "item-selected") return;
+
+      data.forEach(item => {
+        const inputs: FormArray = this.recipeModel.controls['inputs'] as FormArray;
+        // inputs.push(this.fb.group({ inputName: item.name, inputTitle: item.title }));
+        inputs.push(this.fb.group(item));
+      })
+    });
+  }
+
+  _addOutput($event) {
+    const outputs: FormArray = this.recipeModel.controls['outputs'] as FormArray;
+    outputs.push(this.fb.group({ outputName: 'new name', outputTitle: 'new title' }));
   }
 
 }
