@@ -65,8 +65,18 @@ export class CreateRecipePage {
   }
 
   _addOutput($event) {
-    const outputs: FormArray = this.recipeModel.controls['outputs'] as FormArray;
-    outputs.push(this.fb.group({ outputName: 'new name', outputTitle: 'new title' }));
+    const modal = this.modalController.create(SelectItemTemplatePage, null, { showBackdrop: true });
+    modal.present();
+
+    modal.onDidDismiss((data, role) => {
+      if (role !== "item-selected") return;
+
+      data.forEach(item => {
+        const outputs: FormArray = this.recipeModel.controls['outputs'] as FormArray;
+        // inputs.push(this.fb.group({ inputName: item.name, inputTitle: item.title }));
+        outputs.push(this.fb.group(item));
+      })
+    });
   }
 
 }

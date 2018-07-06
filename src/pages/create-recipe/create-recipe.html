@@ -59,14 +59,16 @@
 
             <ng-container formArrayName="outputs">
               <ng-container *ngFor="let output of outputs.controls; let i=index" [formGroupName]="i">
-                  <ion-item>
-                      <ion-label>Output Name</ion-label>
-                      <ion-input type="text" formControlName="outputName"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Output Title</ion-label>
-                      <ion-input type="text" formControlName="outputTitle"></ion-input>
-                    </ion-item>
+                <ion-card>
+                  <ion-card-header>{{output.get("title").value}}</ion-card-header>
+                  <ion-card-content>
+                    <ion-label>{{output.get("name").value}}</ion-label>
+                    <ion-label>{{output.get("value").value}}</ion-label>
+                    <ion-label>{{output.get("materialType").value}}</ion-label>
+                    <ion-label>{{output.get("itemType").value}}</ion-label>
+                    <ion-label>{{output.get("templateType").value}}</ion-label>
+                  </ion-card-content>
+                </ion-card>
               </ng-container>
             </ng-container>
 
