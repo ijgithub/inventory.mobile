@@ -1,5 +1,37 @@
 page-select-item-template {
-  ion-item.selected {
+  .list-item.selected {
     background-color: red;
   }
+
+
+  .list-item {
+    padding: 8px 4px;
+  }
+
+  .list-item-label {
+    padding: 0 0 4px 0;
+  }
+
+  .list-item-content {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .flex-4 {
+    flex: 4;
+  }
+
+  .item-subtitle {
+    font-size: 12px;
+    font-weight: 100;
+  }
+
+  .detail-label {
+    font-size: 12px;
+    font-weight: 100;
+    display: inline;
+  }
+
+
+
 }

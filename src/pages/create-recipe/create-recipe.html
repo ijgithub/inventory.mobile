@@ -11,7 +11,7 @@
   </ion-navbar>
 
 </ion-header>
-<ion-content padding>
+<ion-content>
   <form [formGroup]="recipeModel">
     <ion-card>
       <ion-item>
@@ -27,52 +27,44 @@
 
     <ion-grid>
       <ion-row>
-        <ion-col col-6>
+        <ion-col col-12>
           <ion-card>
-            <label for="">Inputs</label>
-            <p>Add input treba da otvori modal gde ce da se izabere item iz liste</p>
-            <p>Za dodati item treba da postoji mogucnost change i remove</p>
-            <ng-container formArrayName="inputs">
-              <ng-container *ngFor="let input of inputs.controls; let i=index" [formGroupName]="i">
-                <ion-card>
-                  <ion-card-header>{{input.get("title").value}}</ion-card-header>
-                  <ion-card-content>
-                    <ion-label>{{input.get("name").value}}</ion-label>
-                    <ion-label>{{input.get("value").value}}</ion-label>
-                    <ion-label>{{input.get("materialType").value}}</ion-label>
-                    <ion-label>{{input.get("itemType").value}}</ion-label>
-                    <ion-label>{{input.get("templateType").value}}</ion-label>
-                  </ion-card-content>
-                </ion-card>
-              </ng-container>
-            </ng-container>
+            <ion-label for="">Crafting ingredients</ion-label>
+            <ion-list formArrayName="inputs">
+              <ion-item-sliding *ngFor="let input of inputs.controls; let i=index" [formGroupName]="i">
+                <ion-item>
+                  <ion-card-header>{{input.get("item").value.title}} (qty {{input.get("quantity").value}})</ion-card-header>
+                </ion-item>
+                <ion-item-options>
+                  <button ion-button color="primary">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
 
-            <button ion-button (click)="_addInput($event)">Add</button>
+            <button ion-button (click)="_addInput($event)">
+              <ion-icon name="add"></ion-icon>
+            </button>
           </ion-card>
 
         </ion-col>
-        <ion-col col-6>
+        <ion-col col-12>
           <ion-card>
-            <label for="">Outputs</label>
-            <p>Add input treba da otvori modal gde ce da se izabere item iz liste</p>
-            <p>Za dodati item treba da postoji mogucnost change i remove</p>
-
-            <ng-container formArrayName="outputs">
-              <ng-container *ngFor="let output of outputs.controls; let i=index" [formGroupName]="i">
-                <ion-card>
-                  <ion-card-header>{{output.get("title").value}}</ion-card-header>
-                  <ion-card-content>
-                    <ion-label>{{output.get("name").value}}</ion-label>
-                    <ion-label>{{output.get("value").value}}</ion-label>
-                    <ion-label>{{output.get("materialType").value}}</ion-label>
-                    <ion-label>{{output.get("itemType").value}}</ion-label>
-                    <ion-label>{{output.get("templateType").value}}</ion-label>
-                  </ion-card-content>
-                </ion-card>
-              </ng-container>
-            </ng-container>
-
-            <button ion-button (click)="_addOutput($event)">Add</button>
+            <ion-label for="">Crafting results</ion-label>
+            <ion-list formArrayName="outputs">
+              <ion-item-sliding *ngFor="let output of outputs.controls; let i=index" [formGroupName]="i">
+                <ion-item>
+                  <ion-card-header>{{output.get("item").value.title}} (qty {{output.get("quantity").value}})</ion-card-header>
+                </ion-item>
+                <ion-item-options>
+                  <button ion-button color="primary">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-list>
+            <button ion-button (click)="_addOutput($event)"><ion-icon name="add"></ion-icon></button>
           </ion-card>
         </ion-col>
       </ion-row>

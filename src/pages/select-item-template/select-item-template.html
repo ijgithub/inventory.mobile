@@ -27,28 +27,45 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ng-container *ngFor="let item of itemTemplates">
-      <ion-item [attr.data-id]="item.id" (click)="_handleItemClick($event)" [class.selected]="_isSelected(item)">
-        <span ion-label>
-          <span class="item-title">{{item.title}}</span>
-          <span>(</span>
-          <span class="item-subtitle">{{item.name}}</span>
-          <span>)</span>
-        </span>
-        <span class="w-type" item-content>
-          <label>{{_computeItemTypeLabel(item)}}</label>
-          <span class="label">{{item.itemType}}</span>
-        </span>
-        <span class="m-type" item-content>
-          <label>Material Type: </label>
-          <span class="label">{{item.materialType}}</span>
-        </span>
-        <span item-end>
-          <label>Damage: </label>
-          <span class="label">{{item.value}}</span>
-        </span>
-      </ion-item>
-    </ng-container>
-  </ion-list>
+  <ion-grid>
+      <ion-row>
+        <ion-col col-8>
+            <ng-container *ngFor="let item of itemTemplates">
+              <div [attr.data-id]="item.id" (click)="_handleItemClick($event)" class="list-item" [class.selected]="_isSelected(item)">
+                <div class="list-item-label">
+                  <span class="item-title">{{item.title}}</span>
+                  <span>(</span>
+                  <span class="item-subtitle">{{item.name}}</span>
+                  <span>)</span>
+                </div>
+                <div class="list-item-content">
+                  <div class="flex-4">
+                    <label class="detail-label">{{_computeItemTypeLabel(item)}}</label>
+                    <span class="label">{{item.itemType}}</span>
+                  </div>
+
+                  <div class="flex-4">
+                    <label class="detail-label">Material Type: </label>
+                    <span class="label">{{item.materialType}}</span>
+                  </div>
+                  <div class="flex-4">
+                    <label class="detail-label">Damage: </label>
+                    <span class="label">{{item.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+        </ion-col>
+        <ion-col col-4>
+          <div>
+            slelected item
+          </div>
+          <div>
+            <ion-label>Quantity</ion-label>
+            <ion-input type="number" [(ngModel)]="selectedItemQuantity"></ion-input>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
 </ion-content>

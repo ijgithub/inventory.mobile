@@ -46,7 +46,7 @@ export class ManageRecipesPage {
     this._provider.list()
       .then(itemTemplates => {
         itemTemplates.forEach(tmpItem => {
-
+          this.items.push(tmpItem);
         });
 
         this.items = itemTemplates;
@@ -60,6 +60,27 @@ export class ManageRecipesPage {
 
   _handleNewRecipeButtonClick($event) {
     this.navCtrl.push(CreateRecipePage);
+  }
+
+  _handleEditRecipeButtonClick(item) {
+    this.navCtrl.push(CreateRecipePage, { item: item });
+  }
+
+  _handleDeleteRecipeButtonClick(item) {
+    this.loader = this.loadingCtrl.create({
+      content: "Deleting item..."
+    });
+    this.loader.present();
+
+    this._provider.delete(item)
+    .then(result => {
+      this.loader.dismiss();
+      this._refreshItems();
+    })
+    .catch(error => {
+      this.loader.dismiss();
+      alert(error.message || error);
+    });
   }
 
 }

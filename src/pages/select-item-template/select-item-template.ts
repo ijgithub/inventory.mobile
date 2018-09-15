@@ -19,6 +19,7 @@ export class SelectItemTemplatePage {
 
   itemTemplates: any[] = [];
   selectedItemIds: string[] = [];
+  selectedItemQuantity: number = 1;
 
   constructor(
     public navCtrl: NavController,
