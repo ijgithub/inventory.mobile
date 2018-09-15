@@ -1,9 +1,11 @@
 export class CraftingInput {
+  id: number;
   quantity: number;
   craftingIngredientId: number;
 }
 
 export class CraftingOutput {
+  id: number;
   quantity: number;
   craftedItemId: number;
 }

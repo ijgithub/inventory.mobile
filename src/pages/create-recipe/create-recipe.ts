@@ -75,6 +75,7 @@ export class CreateRecipePage {
       item.craftingIngredients.forEach(tmpIng => {
         const input = this.fb.group({
           item: tmpIng.craftingIngredient,
+          id: tmpIng.id,
           quantity: tmpIng.quantity
         });
         inputs.push(input);
@@ -87,6 +88,7 @@ export class CreateRecipePage {
       item.craftedItems.forEach(tmpCi => {
         const output = this.fb.group({
           item: tmpCi.craftedItem,
+          id: tmpCi.id,
           quantity: tmpCi.quantity
         });
         outputs.push(output);
@@ -151,16 +153,24 @@ export class CreateRecipePage {
     this.inputs.value.forEach(input => {
       const craftingInput: CraftingInput = {
         craftingIngredientId: input.item.id,
+        id: input.id,
         quantity: input.quantity
       }
+
+      if (!this.isUpdateMode) craftingInput.id = 0;
+
       rModel.craftingIngredients.push(craftingInput);
     });
 
     this.outputs.value.forEach(input => {
       const craftingOutput: CraftingOutput = {
+        id: input.id,
         craftedItemId: input.item.id,
         quantity: input.quantity
       }
+
+      if (!this.isUpdateMode) craftingOutput.id = 0;
+
       rModel.craftedItems.push(craftingOutput);
     });
 
