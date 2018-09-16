@@ -132,6 +132,58 @@ export class CreateRecipePage {
     });
   }
 
+  _handleEditCraftingInputButtonClick(input) {
+    const modal = this.modalController.create(SelectItemTemplatePage, { input: input.value } , { showBackdrop: true });
+    modal.present();
+
+    modal.onDidDismiss((data, role) => {
+      if (role !== "item-selected") return;
+
+      const inputs: FormArray = this.recipeModel.controls['inputs'] as FormArray;
+      data.forEach(item => {
+        var existing = inputs.controls.find(c => c.value.id == item.id);
+        existing.patchValue(item);
+      })
+    });
+  }
+
+  _handleRemoveCraftingInputButtonClick(input) {
+    const inputs: FormArray = this.recipeModel.controls['inputs'] as FormArray;
+
+    var outputId = input.value.id;
+    var toRemove = inputs.value.findIndex(val => val.id == outputId);
+    if (toRemove > -1) {
+      inputs.controls.splice(toRemove, 1);
+      inputs.value.splice(toRemove, 1);
+    }
+  }
+
+  _handleEditCraftingOutputButtonClick(output) {
+    const modal = this.modalController.create(SelectItemTemplatePage, { input: output.value } , { showBackdrop: true });
+    modal.present();
+
+    modal.onDidDismiss((data, role) => {
+      if (role !== "item-selected") return;
+
+      const outputs: FormArray = this.recipeModel.controls['outputs'] as FormArray;
+      data.forEach(item => {
+        var existing = outputs.controls.find(c => c.value.id == item.id);
+        existing.patchValue(item);
+      })
+    });
+  }
+
+  _handleRemoveCraftingOutputButtonClick(output) {
+    const outputs: FormArray = this.recipeModel.controls['outputs'] as FormArray;
+
+    var outputId = output.value.id;
+    var toRemove = outputs.value.findIndex(val => val.id == outputId);
+    if (toRemove > -1) {
+      outputs.controls.splice(toRemove, 1);
+      outputs.value.splice(toRemove, 1);
+    }
+  }
+
   _handleSave($event) {
     const loadingInst = this.loadingController.create({
       content: "Saving ..."

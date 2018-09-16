@@ -29,6 +29,9 @@ export class SelectItemTemplatePage {
     public loadingController: LoadingController,
     public viewCtrl: ViewController
   ) {
+    const input = navParams.data.input;
+    this.selectedItemIds.push(input.item.id.toString());
+    this.selectedItemQuantity = input.quantity;
   }
 
   ionViewDidLoad() {
@@ -79,12 +82,28 @@ export class SelectItemTemplatePage {
       return;
     }
 
+    const input = this.navParams.data.input;
+    let inputId = -1;
+    if (input != undefined) {
+      inputId = input.id;
+    }
+
     const selectedItems = [];
     this.selectedItemIds.forEach(id => {
       const found = this.itemTemplates.find(it => it.id == +id);
       if (!found) return;
 
-      selectedItems.push(found);
+      let selectedItem = {
+        item: found,
+        quantity: this.selectedItemQuantity,
+        id: 0
+      };
+
+      if (inputId > -1) {
+        selectedItem.id = inputId;
+      }
+
+      selectedItems.push(selectedItem);
     });
 
     this.viewCtrl.dismiss(selectedItems, 'item-selected');

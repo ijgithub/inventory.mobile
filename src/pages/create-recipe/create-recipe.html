@@ -36,7 +36,10 @@
                   <ion-card-header>{{input.get("item").value.title}} (qty {{input.get("quantity").value}})</ion-card-header>
                 </ion-item>
                 <ion-item-options>
-                  <button ion-button color="primary">
+                  <button ion-button color="primary" (click)="_handleEditCraftingInputButtonClick(input)">
+                    <ion-icon name="create"></ion-icon>
+                  </button>
+                  <button ion-button color="secondary" (click)="_handleRemoveCraftingInputButtonClick(input)">
                     <ion-icon name="trash"></ion-icon>
                   </button>
                 </ion-item-options>
@@ -58,7 +61,10 @@
                   <ion-card-header>{{output.get("item").value.title}} (qty {{output.get("quantity").value}})</ion-card-header>
                 </ion-item>
                 <ion-item-options>
-                  <button ion-button color="primary">
+                  <button ion-button color="primary" (click)="_handleEditCraftingOutputButtonClick(output)">
+                    <ion-icon name="create"></ion-icon>
+                  </button>
+                  <button ion-button color="secondary" (click)="_handleRemoveCraftingOutputButtonClick(output)">
                     <ion-icon name="trash"></ion-icon>
                   </button>
                 </ion-item-options>
